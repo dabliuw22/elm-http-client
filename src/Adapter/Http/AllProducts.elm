@@ -41,7 +41,7 @@ init _ =
 view : Model -> Html Msg
 view model =
     div []
-        [ h2 [] [ text "Domain" ]
+        [ h2 [] [ text "Products" ]
         , print model
         ]
 
