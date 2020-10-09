@@ -5,6 +5,7 @@
     $ elm install elm/http
     $ elm install NoRedInk/elm-json-decode-pipeline
     $ elm install TSFoster/elm-uuid
+    $ elm install elm/url
    ```
 
 2. Test:
