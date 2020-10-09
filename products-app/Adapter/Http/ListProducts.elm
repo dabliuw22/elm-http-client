@@ -84,7 +84,7 @@ viewProduct product =
             idToString product.id
     in
     tr []
-        [ th [] [ a [ href ("http://localhost:8000/" ++ id) ] [ text id ] ]
+        [ th [] [ a [ href ("/products/" ++ id) ] [ text id ] ]
         , th [] [ text (nameToString product.name) ]
         , th [] [ text (stockToString product.stock) ]
         , th [] [ text (createdAtToString product.createdAt) ]
