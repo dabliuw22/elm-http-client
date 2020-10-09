@@ -1,4 +1,4 @@
-module Adapter.Http.ListProducts exposing (Model, Msg, init, update, view)
+module Adapter.Http.ListProducts exposing (Model, Msg(..), init, update, view)
 
 import Domain.Products
     exposing
@@ -13,32 +13,32 @@ import Html exposing (Html, a, button, div, table, text, th, tr)
 import Html.Attributes exposing (href)
 import Html.Events exposing (onClick)
 import Http
+import RemoteData exposing (RemoteData, WebData)
 
 
 type alias Products =
     List Product
 
 
-type Model
-    = Failure
-    | Loading
-    | Success Products
+type alias Model =
+    { products : WebData Products
+    }
 
 
 type Msg
     = FetchProducts
-    | ProductReceived (Result Http.Error Products)
+    | ProductReceived (WebData Products)
 
 
-init : () -> ( Model, Cmd Msg )
-init _ =
-    ( Loading, fetchProducts )
+init : ( Model, Cmd Msg )
+init =
+    ( { products = RemoteData.NotAsked }, fetchProducts )
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick FetchProducts ] [ text "Refresh Products" ]
+        [ button [ onClick FetchProducts ] [ text "Get Products" ]
         , viewProducts model
         ]
 
@@ -47,35 +47,33 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         FetchProducts ->
-            ( Loading, fetchProducts )
+            ( { model | products = RemoteData.Loading }, fetchProducts )
 
         ProductReceived response ->
-            case response of
-                Ok products ->
-                    ( Success products, Cmd.none )
-
-                Err _ ->
-                    ( Failure, Cmd.none )
+            ( { model | products = response }, Cmd.none )
 
 
 fetchProducts : Cmd Msg
 fetchProducts =
     Http.get
         { url = "http://localhost:8080/products"
-        , expect = collection |> Http.expectJson ProductReceived
+        , expect = collection |> Http.expectJson (RemoteData.fromResult >> ProductReceived)
         }
 
 
 viewProducts : Model -> Html Msg
 viewProducts model =
-    case model of
-        Failure ->
-            div [] [ text "Failure" ]
+    case model.products of
+        RemoteData.NotAsked ->
+            text ""
 
-        Loading ->
+        RemoteData.Loading ->
             text "Loading..."
 
-        Success products ->
+        RemoteData.Failure error ->
+            div [] [ text "Failure" ]
+
+        RemoteData.Success products ->
             table [] ([ tableHeader ] ++ List.map viewProduct products)
 
 

@@ -4,6 +4,7 @@
     $ elm install elm/json
     $ elm install elm/http
     $ elm install NoRedInk/elm-json-decode-pipeline
+    $ elm install krisajenkins/remotedata
     $ elm install TSFoster/elm-uuid
     $ elm install elm/url
    ```
@@ -13,4 +14,10 @@
     $ npm install elm-test -g
     $ elm-test init
     $ elm-test
+    ```
+   
+3. Server:
+    ```
+    $ npm install elm-live -g
+    $ elm-live products-app/Main.elm --pushstate
     ```
