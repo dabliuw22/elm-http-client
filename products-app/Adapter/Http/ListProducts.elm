@@ -1,5 +1,6 @@
 module Adapter.Http.ListProducts exposing (Model, Msg(..), init, update, view)
 
+import Adapter.Http.Api exposing (..)
 import Domain.Products
     exposing
         ( Product
@@ -9,7 +10,18 @@ import Domain.Products
         , nameToString
         , stockToString
         )
-import Html exposing (Html, a, button, div, table, text, th, tr)
+import Html
+    exposing
+        ( Html
+        , a
+        , br
+        , button
+        , div
+        , table
+        , text
+        , th
+        , tr
+        )
 import Html.Attributes exposing (href)
 import Html.Events exposing (onClick)
 import Http
@@ -27,7 +39,7 @@ type alias Model =
 
 type Msg
     = FetchProducts
-    | ProductReceived (WebData Products)
+    | ProductsReceived (WebData Products)
 
 
 init : ( Model, Cmd Msg )
@@ -38,8 +50,13 @@ init =
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick FetchProducts ] [ text "Get Products" ]
-        , viewProducts model
+        [ div []
+            [ button [ onClick FetchProducts ] [ text "Get Products" ]
+            , viewProducts model
+            ]
+        , br [] []
+        , div []
+            [ a [ href "/products/new" ] [ text "New Product" ] ]
         ]
 
 
@@ -49,15 +66,15 @@ update msg model =
         FetchProducts ->
             ( { model | products = RemoteData.Loading }, fetchProducts )
 
-        ProductReceived response ->
+        ProductsReceived response ->
             ( { model | products = response }, Cmd.none )
 
 
 fetchProducts : Cmd Msg
 fetchProducts =
     Http.get
-        { url = "http://localhost:8080/products"
-        , expect = collection |> Http.expectJson (RemoteData.fromResult >> ProductReceived)
+        { url = base ++ products
+        , expect = collection |> Http.expectJson (RemoteData.fromResult >> ProductsReceived)
         }
 
 
@@ -88,6 +105,8 @@ viewProduct product =
         , th [] [ text (nameToString product.name) ]
         , th [] [ text (stockToString product.stock) ]
         , th [] [ text (createdAtToString product.createdAt) ]
+        , th [] [ a [ href ("/products/" ++ id ++ "/delete") ] [ text "Delete" ] ]
+        , th [] [ a [ href ("/products/" ++ id ++ "/update") ] [ text "Update" ] ]
         ]
 
 
