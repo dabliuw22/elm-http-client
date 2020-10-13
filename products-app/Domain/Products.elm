@@ -7,6 +7,7 @@ module Domain.Products exposing
     , collection
     , createdAtToString
     , decoder
+    , encoder
     , idToString
     , nameToString
     , stockToString
@@ -14,6 +15,7 @@ module Domain.Products exposing
 
 import Json.Decode exposing (Decoder, float, list, map, string, succeed)
 import Json.Decode.Pipeline exposing (required)
+import Json.Encode as Encode
 
 
 type alias Product =
@@ -92,3 +94,21 @@ stockDecoder =
 createdAtDecoder : Decoder ProductCreatedAt
 createdAtDecoder =
     map ProductCreatedAt string
+
+
+encoder : ( ProductName, ProductStock ) -> Encode.Value
+encoder ( name, stock ) =
+    Encode.object
+        [ ( "product_name", nameEncoder name )
+        , ( "product_stock", stockEncoder stock )
+        ]
+
+
+nameEncoder : ProductName -> Encode.Value
+nameEncoder (ProductName name) =
+    Encode.string name
+
+
+stockEncoder : ProductStock -> Encode.Value
+stockEncoder (ProductStock stock) =
+    Encode.float stock
