@@ -37,7 +37,8 @@ parseUrl url =
 matchRoute : Parser (Route -> a) a
 matchRoute =
     oneOf
-        [ map Products (s "products") -- /products
+        [ map Products top -- /
+        , map Products (s "products") -- /products
         , map NewProduct (s "products" </> s "new") -- /products/new
         , map DeleteProduct (s "products" </> string </> s "delete") -- /products/{product_id}/delete
         , map UpdateProduct (s "products" </> string </> s "update") -- /products/{product_id}/update
