@@ -1,5 +1,5 @@
 .idea/
-elm-http-client.iml
+*.iml
 elm-stuff/
 out/
 .DS_Store
