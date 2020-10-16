@@ -26,6 +26,7 @@
     
 4. Dev Server with http-server:
     ```
+    $ elm make src/Main.elm --output main.js --optimize
     $ npm install http-server -g
     $ http-server -p 8000 -c -1
     ```
