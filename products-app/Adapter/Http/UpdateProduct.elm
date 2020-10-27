@@ -1,14 +1,7 @@
 module Adapter.Http.UpdateProduct exposing (Model, Msg(..), init, update, view)
 
 import Adapter.Http.Api exposing (base, products)
-import Adapter.Json.Products
-    exposing
-        ( decoder
-        , encoder
-        , idToString
-        , nameToString
-        , stockToString
-        )
+import Adapter.Json.Products exposing (decoder, encoder)
 import Browser.Navigation exposing (load)
 import Domain.Products
     exposing
@@ -16,6 +9,9 @@ import Domain.Products
         , ProductId
         , ProductName(..)
         , ProductStock(..)
+        , idToString
+        , nameToString
+        , stockToString
         )
 import Html
     exposing

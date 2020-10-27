@@ -1,11 +1,7 @@
 module Adapter.Json.Products exposing
     ( collection
-    , createdAtToString
     , decoder
     , encoder
-    , idToString
-    , nameToString
-    , stockToString
     )
 
 import Domain.Products

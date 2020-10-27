@@ -1,15 +1,16 @@
 module Adapter.Http.OneProduct exposing (Model, Msg(..), init, update, view)
 
 import Adapter.Http.Api exposing (base, products)
-import Adapter.Json.Products
+import Adapter.Json.Products exposing (decoder)
+import Domain.Products
     exposing
-        ( createdAtToString
-        , decoder
+        ( Product
+        , ProductId
+        , createdAtToString
         , idToString
         , nameToString
         , stockToString
         )
-import Domain.Products exposing (Product, ProductId)
 import Html
     exposing
         ( Html

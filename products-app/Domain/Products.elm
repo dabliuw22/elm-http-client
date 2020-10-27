@@ -4,6 +4,10 @@ module Domain.Products exposing
     , ProductId(..)
     , ProductName(..)
     , ProductStock(..)
+    , createdAtToString
+    , idToString
+    , nameToString
+    , stockToString
     )
 
 
@@ -29,3 +33,23 @@ type ProductStock
 
 type ProductCreatedAt
     = ProductCreatedAt String
+
+
+idToString : ProductId -> String
+idToString (ProductId id) =
+    id
+
+
+nameToString : ProductName -> String
+nameToString (ProductName name) =
+    name
+
+
+stockToString : ProductStock -> String
+stockToString (ProductStock stock) =
+    String.fromFloat stock
+
+
+createdAtToString : ProductCreatedAt -> String
+createdAtToString (ProductCreatedAt createdAt) =
+    createdAt

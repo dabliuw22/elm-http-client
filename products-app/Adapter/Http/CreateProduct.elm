@@ -1,16 +1,13 @@
 module Adapter.Http.CreateProduct exposing (Model, Msg(..), init, update, view)
 
 import Adapter.Http.Api exposing (base, products)
-import Adapter.Json.Products
-    exposing
-        ( encoder
-        , nameToString
-        )
+import Adapter.Json.Products exposing (encoder)
 import Domain.Products
     exposing
         ( Product
         , ProductName(..)
         , ProductStock(..)
+        , nameToString
         )
 import Html
     exposing

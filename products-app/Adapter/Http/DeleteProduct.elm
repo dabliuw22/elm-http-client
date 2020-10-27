@@ -1,8 +1,12 @@
 module Adapter.Http.DeleteProduct exposing (Model, Msg(..), init, update, view)
 
 import Adapter.Http.Api exposing (base, products)
-import Adapter.Json.Products exposing (idToString)
-import Domain.Products exposing (Product, ProductId(..))
+import Domain.Products
+    exposing
+        ( Product
+        , ProductId(..)
+        , idToString
+        )
 import Html
     exposing
         ( Html
