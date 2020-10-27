@@ -12,29 +12,17 @@ import Domain.Products
         , ProductName(..)
         , ProductStock(..)
         )
-import Json.Decode exposing (Decoder, float, list, map, string, succeed)
+import Json.Decode
+    exposing
+        ( Decoder
+        , float
+        , list
+        , map
+        , string
+        , succeed
+        )
 import Json.Decode.Pipeline exposing (required)
 import Json.Encode as Encode
-
-
-idToString : ProductId -> String
-idToString (ProductId id) =
-    id
-
-
-nameToString : ProductName -> String
-nameToString (ProductName name) =
-    name
-
-
-stockToString : ProductStock -> String
-stockToString (ProductStock stock) =
-    String.fromFloat stock
-
-
-createdAtToString : ProductCreatedAt -> String
-createdAtToString (ProductCreatedAt createdAt) =
-    createdAt
 
 
 decoder : Decoder Product
