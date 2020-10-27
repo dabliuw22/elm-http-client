@@ -1,6 +1,14 @@
 module Adapter.Http.UpdateProduct exposing (Model, Msg(..), init, update, view)
 
 import Adapter.Http.Api exposing (base, products)
+import Adapter.Json.Products
+    exposing
+        ( decoder
+        , encoder
+        , idToString
+        , nameToString
+        , stockToString
+        )
 import Browser.Navigation exposing (load)
 import Domain.Products
     exposing
@@ -8,11 +16,6 @@ import Domain.Products
         , ProductId
         , ProductName(..)
         , ProductStock(..)
-        , decoder
-        , encoder
-        , idToString
-        , nameToString
-        , stockToString
         )
 import Html
     exposing
@@ -148,7 +151,7 @@ viewProduct model =
         RemoteData.Loading ->
             text "Loading..."
 
-        RemoteData.Failure error ->
+        RemoteData.Failure _ ->
             div [] [ text "Failure" ]
 
         RemoteData.Success product ->
@@ -174,7 +177,7 @@ viewProduct model =
 
 
 viewForm : Model -> Product -> Html Msg
-viewForm model product =
+viewForm model _ =
     form []
         [ div []
             [ text "Name"

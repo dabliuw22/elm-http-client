@@ -1,15 +1,15 @@
 module Adapter.Http.ListProducts exposing (Model, Msg(..), init, update, view)
 
 import Adapter.Http.Api exposing (..)
-import Domain.Products
+import Adapter.Json.Products
     exposing
-        ( Product
-        , collection
+        ( collection
         , createdAtToString
         , idToString
         , nameToString
         , stockToString
         )
+import Domain.Products exposing (Product)
 import Html
     exposing
         ( Html
