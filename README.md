@@ -3,7 +3,7 @@
     ```
     $ elm install elm/json
     $ elm install elm/http
-    $  elm install elm/time
+    $ elm install elm/time
     $ elm install NoRedInk/elm-json-decode-pipeline
     $ elm install krisajenkins/remotedata
     $ elm install TSFoster/elm-uuid
