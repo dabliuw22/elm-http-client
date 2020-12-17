@@ -1,7 +1,8 @@
 module Adapter.Http.ListProducts exposing (Model, Msg(..), init, update, view)
 
 import Adapter.Http.Api exposing (..)
-import Adapter.Json.Products exposing (collection)
+import Adapter.Json.Products exposing (collection, collectionEncoder)
+import Adapter.Storage.ProductsPort exposing (storeProducts)
 import Domain.Products
     exposing
         ( Product
@@ -25,6 +26,7 @@ import Html
 import Html.Attributes exposing (href)
 import Html.Events exposing (onClick)
 import Http
+import Json.Encode as Encode
 import RemoteData exposing (RemoteData, WebData)
 
 
@@ -67,7 +69,7 @@ update msg model =
             ( { model | products = RemoteData.Loading }, fetchProducts )
 
         ProductsReceived response ->
-            ( { model | products = response }, Cmd.none )
+            ( { model | products = response }, saveProducts response )
 
 
 fetchProducts : Cmd Msg
@@ -76,6 +78,18 @@ fetchProducts =
         { url = base ++ products
         , expect = collection |> Http.expectJson (RemoteData.fromResult >> ProductsReceived)
         }
+
+
+saveProducts : WebData Products -> Cmd msg
+saveProducts response =
+    case response of
+        RemoteData.Success products ->
+            collectionEncoder products
+                |> Encode.encode 0
+                |> storeProducts
+
+        _ ->
+            Cmd.none
 
 
 viewProducts : Model -> Html Msg
