@@ -1,5 +1,6 @@
 module Adapter.Json.Products exposing
     ( collection
+    , collectionEncoder
     , decoder
     , encoder
     )
@@ -57,6 +58,31 @@ stockDecoder =
 createdAtDecoder : Decoder ProductCreatedAt
 createdAtDecoder =
     map ProductCreatedAt string
+
+
+collectionEncoder : List Product -> Encode.Value
+collectionEncoder products =
+    Encode.list encoderAll products
+
+
+idEncoder : ProductId -> Encode.Value
+idEncoder (ProductId id) =
+    Encode.string id
+
+
+createdAtEncoder : ProductCreatedAt -> Encode.Value
+createdAtEncoder (ProductCreatedAt createdAt) =
+    Encode.string createdAt
+
+
+encoderAll : Product -> Encode.Value
+encoderAll product =
+    Encode.object
+        [ ( "product_id", idEncoder product.id )
+        , ( "product_name", nameEncoder product.name )
+        , ( "product_stock", stockEncoder product.stock )
+        , ( "product_created_at", createdAtEncoder product.createdAt )
+        ]
 
 
 encoder : ( ProductName, ProductStock ) -> Encode.Value
