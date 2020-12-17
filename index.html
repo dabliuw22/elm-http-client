@@ -9,10 +9,10 @@
 
 <body>
 	<script>
-        var app = Elm.Main.init({});
+        const app = Elm.Main.init({});
         app.ports.storeProducts.subscribe(function (products) {
             if (products.length > 0) {
-                var json = JSON.stringify(products);
+                const json = JSON.stringify(products);
                 localStorage.setItem("products", json);
                 console.log("Saved state: ", json)
             }
