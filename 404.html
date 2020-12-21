@@ -8,14 +8,16 @@
 </head>
 
 <body>
-<script>
-    const app = Elm.Main.init({});
-    app.ports.storeProducts.subscribe(function (products) {
-        if (products.length > 0) {
-            const json = JSON.stringify(products);
-            localStorage.setItem("products", json);
-            console.log("Saved state: ", json)
-        }
-    });
-</script>
+    <script>
+        const app = Elm.Main.init({});
+        app.ports.storeProducts.subscribe(function (products) {
+            if (products.length > 0) {
+                const json = JSON.stringify(products);
+                localStorage.setItem("products", json);
+                console.log("Saved state: ", json)
+            }
+        });
+    </script>
 </body>
+
+</html>
